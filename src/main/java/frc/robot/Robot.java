@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
 
   @Override
   public void teleopInit() {
-    hardware.setShooterSpeed(0);
+    hardware.setShooterPower(0);
   }
 
   /**
@@ -88,17 +88,33 @@ public class Robot extends IterativeRobot {
   @Override
   public void teleopPeriodic() {
     if(humanControl.isFastestShootDesired()) {
-      hardware.setShooterSpeed(1);
+      hardware.setShooterPower(1);
     } else if(humanControl.isFastShootDesired()) {
-      hardware.setShooterSpeed(0.8);
+      hardware.setShooterPower(0.8);
     } else if(humanControl.isMediumShootDesired()) {
-      hardware.setShooterSpeed(0.5);
+      hardware.setShooterPower(0.5);
     } else if(humanControl.isSlowShootDesired()) {
-      hardware.setShooterSpeed(0.3);
+      hardware.setShooterPower(0.3);
     } else {
-      hardware.setShooterSpeed(humanControl.analogShoot());
+      hardware.setShooterPower(humanControl.analogShoot());
     }
 
+    /***
+     * OR with VELOCITY CONTROL
+     * 
+    if(humanControl.isFastestShootDesired()) {
+      hardware.setShooterVelocity(1000); //IN RPM
+    } else if(humanControl.isFastShootDesired()) {
+      hardware.setShooterVelocity(1000);
+    } else if(humanControl.isMediumShootDesired()) {
+      hardware.setShooterVelocity(1000);
+    } else if(humanControl.isSlowShootDesired()) {
+      hardware.setShooterVelocity(1000);
+    } else {
+      hardware.setShooterPower(humanControl.analogShoot());
+    }
+
+     */
 
   }
 

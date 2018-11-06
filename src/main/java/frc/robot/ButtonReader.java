@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /** Debounces and reads controller values 
  * @category hardware
- * @author Peter I. Chacko, Eric Warner, John Sullivan Jr, Jake Boothby, Elliot
+ * @author Peter I. Chacko, Eric Warner, John Poulin Jr, Jake Boothby, Elliot
  *         Friedlander
  *         **/
 public class ButtonReader {
