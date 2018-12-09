@@ -87,6 +87,9 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.putNumber("RPM of Shooter", hardware.getShooterVelocity());
+    humanControl.update();
+
     if(humanControl.isFastestShootDesired()) {
       hardware.setShooterPower(1);
     } else if(humanControl.isFastShootDesired()) {
@@ -117,7 +120,10 @@ public class Robot extends IterativeRobot {
      */
 
   }
-
+  @Override
+  public void disabledPeriodic() {
+    SmartDashboard.putNumber("RPM of Shooter", hardware.getShooterVelocity());
+  }
   /**
    * This function is called periodically during test mode.
    */

@@ -31,7 +31,7 @@ public abstract class RemoteControl {
 	public abstract boolean isSlowShootDesired();
 	/*** Gets the value of joystick for value of shooter Joystick: Left Vertical*/
 	public abstract double analogShoot();
-
+	public abstract void update();
 
 
 	

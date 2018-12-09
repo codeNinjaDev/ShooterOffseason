@@ -26,8 +26,8 @@ public class ControlBoard extends RemoteControl {
 
 		fastestShooterButton = new ButtonReader(operatorJoy, XBoxMappings.YELLOW_BUTTON, "Shoot Ball 1 Speed");
 		fastShooterButton = new ButtonReader(operatorJoy, XBoxMappings.RED_BUTTON, "Shoot Ball 0.8 Speed");
-		mediumShooterButton = new ButtonReader(operatorJoy, XBoxMappings.YELLOW_BUTTON, "Shoot Ball 0.5 Speed");
-		slowShooterButton = new ButtonReader(operatorJoy, XBoxMappings.YELLOW_BUTTON, "Shoot Ball 0.3 Speed");
+		mediumShooterButton = new ButtonReader(operatorJoy, XBoxMappings.BLUE_BUTTON, "Shoot Ball 0.5 Speed");
+		slowShooterButton = new ButtonReader(operatorJoy, XBoxMappings.GREEN_BUTTON, "Shoot Ball 0.3 Speed");
 
 		driverLeftJoyX = 0;
 		driverLeftJoyY = 0;
@@ -60,6 +60,10 @@ public class ControlBoard extends RemoteControl {
 		mediumShooterButton.readValue();
 		slowShooterButton.readValue();
 
+	}
+
+	public void update() {
+		readControls();
 	}
 
 	/** Gets joystick value given joystick  and axe 

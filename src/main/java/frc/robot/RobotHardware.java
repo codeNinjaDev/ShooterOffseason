@@ -4,6 +4,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -34,7 +35,7 @@ public class RobotHardware extends Subsystem {
 	 * We will use this encoder to measure the speed of the wheel.
 	 * We will use the speed as input into a PID feedback loop
 	*/
-	Encoder shooterEncoder;
+	Counter shooterEncoder;
 
 	/*** PID Controller manages the speed of the shooter towards a setpoint
 	 */
@@ -42,10 +43,12 @@ public class RobotHardware extends Subsystem {
 	public RobotHardware() {
 		shooterMotor = new Talon(Ports.SHOOTER_MOTOR_PORT);
 		// Gives shooter ports, does not reverse direction, and sets to a resultion suitable for a high RPM
-		shooterEncoder = new Encoder(Ports.SHOOTER_ENCODER_PORTS[0], Ports.SHOOTER_ENCODER_PORTS[1], false, EncodingType.k1X);
-
+		shooterEncoder = new Counter(Ports.SHOOTER_ENCODER_PORT);
+		shooterEncoder.setUpSourceEdge(true, true);
+		shooterEncoder.setDistancePerPulse(0.5); //1 rev is 2 pulses
 		// Set the encoder to focus on speed, not displacement
 		shooterEncoder.setPIDSourceType(PIDSourceType.kRate);
+		
 		shooterPID = new PIDController(0, 0, 0, 0, shooterEncoder, shooterMotor);
 		shooterPID.setSetpoint(0);
 
@@ -53,13 +56,15 @@ public class RobotHardware extends Subsystem {
 	}
 
 	public void setShooterVelocity(double RPM) {
+		double RPS = RPM/60;
 		shooterPID.setPID(Parameters.SHOOTER_P, Parameters.SHOOTER_I, Parameters.SHOOTER_D, Parameters.SHOOTER_F);
-		shooterPID.setSetpoint(RPM);
+		shooterPID.setSetpoint(RPS);
 		shooterPID.enable();
 	}
 
+
 	public double getShooterError() {
-		return shooterPID.getSetpoint() - getShooterVelocity();
+		return (shooterPID.getSetpoint()*60) - getShooterVelocity();
 	}
 
 	public void setShooterPower(double power) {
@@ -75,9 +80,9 @@ public class RobotHardware extends Subsystem {
 	}
 
 	public double getShooterVelocity() {
-		return shooterEncoder.getRate();
+		return shooterEncoder.getRate() * 60;
 	}
-
+	
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
